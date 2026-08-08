@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maths Table Practice</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <h1>Maths Table Practice</h1>
+
+    <section id="setup" class="panel">
+      <label for="tableSelect">Choose a table</label>
+      <select id="tableSelect">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+      </select>
+      <button id="startButton" type="button">Start Practice</button>
+    </section>
+
+    <section id="practice" class="panel hidden">
+      <p id="questionCount" class="question-count">Question 1 of 10</p>
+      <p id="questionText" class="question-text">2 &times; 1 = ?</p>
+
+      <form id="answerForm">
+        <label for="answerInput">Your answer</label>
+        <input id="answerInput" type="number" autocomplete="off" required>
+        <button type="submit">Submit</button>
+      </form>
+
+      <p id="feedback" class="feedback"></p>
+      <p id="scoreText" class="score">Score: 0</p>
+    </section>
+
+    <section id="result" class="panel hidden">
+      <h2>Practice Complete</h2>
+      <p id="finalScore" class="final-score">Score: 0 / 10</p>
+      <button id="againButton" type="button">Practice Again</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
