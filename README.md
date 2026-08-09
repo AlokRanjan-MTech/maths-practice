@@ -4,9 +4,10 @@ A very small beginner-friendly web app for practising multiplication tables.
 
 ## What It Does
 
-- Choose one multiplication table from 2 to 20.
+- Choose a start table and end table from 2 to 20.
 - Click **Start Practice**.
 - Answer 10 random questions.
+- Questions use multipliers from 2 to 10.
 - See your score at the end.
 
 ## Files

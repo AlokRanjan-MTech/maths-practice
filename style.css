@@ -50,6 +50,18 @@ input {
   border-radius: 6px;
 }
 
+.range-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.range-text {
+  margin: 0 0 18px;
+  color: #52606d;
+  font-weight: 700;
+}
+
 button {
   width: 100%;
   padding: 13px 18px;
@@ -114,6 +126,11 @@ button:hover {
 
   .panel {
     padding: 18px;
+  }
+
+  .range-row {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .question-text {

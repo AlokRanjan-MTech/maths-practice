@@ -2,15 +2,19 @@ var totalQuestions = 10;
 var multiplySign = "\u00d7";
 var currentQuestion = 0;
 var score = 0;
-var selectedTable = 2;
-var currentMultiplier = 1;
+var startTable = 2;
+var endTable = 2;
+var currentTable = 2;
+var currentMultiplier = 2;
 var answerSubmitted = false;
 
 var setupSection = document.getElementById("setup");
 var practiceSection = document.getElementById("practice");
 var resultSection = document.getElementById("result");
 
-var tableSelect = document.getElementById("tableSelect");
+var startTableSelect = document.getElementById("startTableSelect");
+var endTableSelect = document.getElementById("endTableSelect");
+var rangeText = document.getElementById("rangeText");
 var startButton = document.getElementById("startButton");
 var questionCount = document.getElementById("questionCount");
 var questionText = document.getElementById("questionText");
@@ -22,11 +26,16 @@ var finalScore = document.getElementById("finalScore");
 var againButton = document.getElementById("againButton");
 
 startButton.addEventListener("click", startPractice);
+startTableSelect.addEventListener("change", updateTableRange);
+endTableSelect.addEventListener("change", updateTableRange);
 answerForm.addEventListener("submit", submitAnswer);
 againButton.addEventListener("click", showSetup);
 
+updateTableRange();
+
 function startPractice() {
-  selectedTable = Number(tableSelect.value);
+  startTable = Number(startTableSelect.value);
+  endTable = Number(endTableSelect.value);
   currentQuestion = 0;
   score = 0;
 
@@ -39,11 +48,12 @@ function startPractice() {
 
 function showNextQuestion() {
   currentQuestion = currentQuestion + 1;
+  currentTable = getRandomTable();
   currentMultiplier = getRandomMultiplier();
   answerSubmitted = false;
 
   questionCount.textContent = "Question " + currentQuestion + " of " + totalQuestions;
-  questionText.textContent = selectedTable + " " + multiplySign + " " + currentMultiplier + " = ?";
+  questionText.textContent = currentTable + " " + multiplySign + " " + currentMultiplier + " = ?";
   scoreText.textContent = "Score: " + score;
   feedback.textContent = "";
   feedback.className = "feedback";
@@ -61,7 +71,7 @@ function submitAnswer(event) {
   answerSubmitted = true;
 
   var studentAnswer = Number(answerInput.value);
-  var correctAnswer = selectedTable * currentMultiplier;
+  var correctAnswer = currentTable * currentMultiplier;
 
   if (studentAnswer === correctAnswer) {
     score = score + 1;
@@ -93,5 +103,34 @@ function showSetup() {
 }
 
 function getRandomMultiplier() {
-  return Math.floor(Math.random() * 10) + 1;
+  return Math.floor(Math.random() * 9) + 2;
+}
+
+function getRandomTable() {
+  return Math.floor(Math.random() * (endTable - startTable + 1)) + startTable;
+}
+
+function updateTableRange() {
+  var selectedStart = Number(startTableSelect.value);
+  var selectedEnd = Number(endTableSelect.value);
+
+  if (selectedEnd < selectedStart) {
+    endTableSelect.value = selectedStart;
+    selectedEnd = selectedStart;
+  }
+
+  updateEndTableOptions(selectedStart);
+
+  if (selectedStart === selectedEnd) {
+    rangeText.textContent = "Questions will be from Table " + selectedStart;
+  } else {
+    rangeText.textContent = "Questions will be from Tables " + selectedStart + " to " + selectedEnd;
+  }
+}
+
+function updateEndTableOptions(selectedStart) {
+  for (var i = 0; i < endTableSelect.options.length; i++) {
+    var option = endTableSelect.options[i];
+    option.disabled = Number(option.value) < selectedStart;
+  }
 }
