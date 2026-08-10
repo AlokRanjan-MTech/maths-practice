@@ -156,8 +156,61 @@ button:hover {
 }
 
 .final-score {
-  font-size: 1.6rem;
+  margin: 8px 0;
+  font-size: 1.8rem;
   font-weight: 700;
+}
+
+.result-counts,
+.performance-message,
+.no-review-message {
+  margin: 8px 0;
+  font-weight: 700;
+}
+
+.performance-message {
+  color: #14532d;
+  font-size: 1.2rem;
+}
+
+.review-section {
+  margin: 18px 0;
+  text-align: left;
+}
+
+.review-section h3 {
+  margin: 0 0 10px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.review-table {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 110px;
+  gap: 8px 12px;
+  align-items: start;
+  font-size: 0.98rem;
+}
+
+.review-header {
+  font-weight: 700;
+  color: #52606d;
+  border-bottom: 1px solid #d9e2ec;
+  padding-bottom: 6px;
+}
+
+.review-rows {
+  display: contents;
+}
+
+.review-question,
+.review-answer {
+  padding: 4px 0;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.review-answer {
+  text-align: center;
 }
 
 .hidden {
@@ -184,5 +237,11 @@ button:hover {
 
   .question-text {
     font-size: 2.4rem;
+  }
+
+  .review-table {
+    grid-template-columns: minmax(0, 1fr) 92px;
+    gap: 6px 8px;
+    font-size: 0.92rem;
   }
 }

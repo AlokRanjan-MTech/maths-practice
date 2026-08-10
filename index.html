@@ -103,7 +103,20 @@
 
     <section id="result" class="panel hidden">
       <h2>Practice Complete</h2>
-      <p id="finalScore" class="final-score">Score: 0 / 10</p>
+      <p id="finalScore" class="final-score">0 / 10 &bull; 0%</p>
+      <p id="resultCounts" class="result-counts">0 Correct &bull; 0 Wrong</p>
+      <p id="performanceMessage" class="performance-message">Keep Practising!</p>
+
+      <div id="reviewSection" class="review-section">
+        <h3>Questions to Review</h3>
+        <div class="review-table">
+          <div class="review-header">Question</div>
+          <div class="review-header">Your Answer</div>
+          <div id="reviewRows" class="review-rows"></div>
+        </div>
+      </div>
+
+      <p id="noReviewMessage" class="no-review-message hidden">No questions to review.</p>
       <button id="againButton" type="button">Practice Again</button>
     </section>
   </main>

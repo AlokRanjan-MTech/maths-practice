@@ -9,6 +9,7 @@ var currentMultiplier = 2;
 var lastTable = 0;
 var lastMultiplier = 0;
 var answerSubmitted = false;
+var wrongAnswers = [];
 
 var setupSection = document.getElementById("setup");
 var practiceSection = document.getElementById("practice");
@@ -26,6 +27,11 @@ var answerInput = document.getElementById("answerInput");
 var feedback = document.getElementById("feedback");
 var scoreText = document.getElementById("scoreText");
 var finalScore = document.getElementById("finalScore");
+var resultCounts = document.getElementById("resultCounts");
+var performanceMessage = document.getElementById("performanceMessage");
+var reviewSection = document.getElementById("reviewSection");
+var reviewRows = document.getElementById("reviewRows");
+var noReviewMessage = document.getElementById("noReviewMessage");
 var againButton = document.getElementById("againButton");
 
 startButton.addEventListener("click", startPractice);
@@ -44,6 +50,7 @@ function startPractice() {
   score = 0;
   lastTable = 0;
   lastMultiplier = 0;
+  wrongAnswers = [];
 
   setupSection.classList.add("hidden");
   resultSection.classList.add("hidden");
@@ -75,7 +82,8 @@ function submitAnswer(event) {
 
   answerSubmitted = true;
 
-  var studentAnswer = Number(answerInput.value);
+  var submittedAnswer = answerInput.value;
+  var studentAnswer = Number(submittedAnswer);
   var correctAnswer = currentTable * currentMultiplier;
 
   if (studentAnswer === correctAnswer) {
@@ -83,6 +91,12 @@ function submitAnswer(event) {
     feedback.textContent = "Correct!";
     feedback.className = "feedback correct";
   } else {
+    wrongAnswers.push({
+      table: currentTable,
+      multiplier: currentMultiplier,
+      correctAnswer: correctAnswer,
+      studentAnswer: submittedAnswer
+    });
     feedback.textContent = "Wrong! Correct answer is " + correctAnswer;
     feedback.className = "feedback wrong";
   }
@@ -97,9 +111,15 @@ function submitAnswer(event) {
 }
 
 function showResult() {
+  var wrongCount = totalQuestions - score;
+  var accuracy = Math.round((score / totalQuestions) * 100);
+
   practiceSection.classList.add("hidden");
   resultSection.classList.remove("hidden");
-  finalScore.textContent = "Score: " + score + " / " + totalQuestions;
+  finalScore.textContent = score + " / " + totalQuestions + " \u2022 " + accuracy + "%";
+  resultCounts.textContent = score + " Correct \u2022 " + wrongCount + " Wrong";
+  performanceMessage.textContent = getPerformanceMessage(accuracy);
+  showReview();
 }
 
 function showSetup() {
@@ -133,6 +153,49 @@ function getSelectedQuestionTotal() {
   }
 
   return 10;
+}
+
+function getPerformanceMessage(accuracy) {
+  if (accuracy >= 90) {
+    return "Excellent!";
+  }
+
+  if (accuracy >= 75) {
+    return "Great Job!";
+  }
+
+  if (accuracy >= 50) {
+    return "Good Practice!";
+  }
+
+  return "Keep Practising!";
+}
+
+function showReview() {
+  reviewRows.innerHTML = "";
+
+  if (wrongAnswers.length === 0) {
+    reviewSection.classList.add("hidden");
+    noReviewMessage.classList.remove("hidden");
+    return;
+  }
+
+  reviewSection.classList.remove("hidden");
+  noReviewMessage.classList.add("hidden");
+
+  for (var i = 0; i < wrongAnswers.length; i++) {
+    var wrongAnswer = wrongAnswers[i];
+    var questionCell = document.createElement("div");
+    var answerCell = document.createElement("div");
+
+    questionCell.className = "review-question";
+    answerCell.className = "review-answer";
+    questionCell.textContent = wrongAnswer.table + " " + multiplySign + " " + wrongAnswer.multiplier + " = " + wrongAnswer.correctAnswer;
+    answerCell.textContent = String(wrongAnswer.studentAnswer);
+
+    reviewRows.appendChild(questionCell);
+    reviewRows.appendChild(answerCell);
+  }
 }
 
 function updateTableRange() {
