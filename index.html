@@ -64,12 +64,42 @@
       </div>
 
       <p id="rangeText" class="range-text">Questions will be from Table 2</p>
+
+      <fieldset class="question-options">
+        <legend>Number of Questions</legend>
+
+        <label>
+          <input type="radio" name="questionTotal" value="5">
+          <span>5</span>
+        </label>
+
+        <label>
+          <input type="radio" name="questionTotal" value="10" checked>
+          <span>10</span>
+        </label>
+
+        <label>
+          <input type="radio" name="questionTotal" value="15">
+          <span>15</span>
+        </label>
+
+        <label>
+          <input type="radio" name="questionTotal" value="20">
+          <span>20</span>
+        </label>
+
+        <label>
+          <input type="radio" name="questionTotal" value="25">
+          <span>25</span>
+        </label>
+      </fieldset>
+
       <button id="startButton" type="button">Start Practice</button>
     </section>
 
     <section id="practice" class="panel hidden">
       <p id="questionCount" class="question-count">Question 1 of 10</p>
-      <p id="questionText" class="question-text">2 &times; 1 = ?</p>
+      <p id="questionText" class="question-text">2 &times; 2 = ?</p>
 
       <form id="answerForm">
         <label for="answerInput">Your answer</label>

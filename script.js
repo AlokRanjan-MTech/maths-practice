@@ -6,6 +6,8 @@ var startTable = 2;
 var endTable = 2;
 var currentTable = 2;
 var currentMultiplier = 2;
+var lastTable = 0;
+var lastMultiplier = 0;
 var answerSubmitted = false;
 
 var setupSection = document.getElementById("setup");
@@ -15,6 +17,7 @@ var resultSection = document.getElementById("result");
 var startTableSelect = document.getElementById("startTableSelect");
 var endTableSelect = document.getElementById("endTableSelect");
 var rangeText = document.getElementById("rangeText");
+var questionTotalOptions = document.getElementsByName("questionTotal");
 var startButton = document.getElementById("startButton");
 var questionCount = document.getElementById("questionCount");
 var questionText = document.getElementById("questionText");
@@ -36,8 +39,11 @@ updateTableRange();
 function startPractice() {
   startTable = Number(startTableSelect.value);
   endTable = Number(endTableSelect.value);
+  totalQuestions = getSelectedQuestionTotal();
   currentQuestion = 0;
   score = 0;
+  lastTable = 0;
+  lastMultiplier = 0;
 
   setupSection.classList.add("hidden");
   resultSection.classList.add("hidden");
@@ -48,8 +54,7 @@ function startPractice() {
 
 function showNextQuestion() {
   currentQuestion = currentQuestion + 1;
-  currentTable = getRandomTable();
-  currentMultiplier = getRandomMultiplier();
+  setRandomQuestion();
   answerSubmitted = false;
 
   questionCount.textContent = "Question " + currentQuestion + " of " + totalQuestions;
@@ -110,12 +115,32 @@ function getRandomTable() {
   return Math.floor(Math.random() * (endTable - startTable + 1)) + startTable;
 }
 
+function setRandomQuestion() {
+  do {
+    currentTable = getRandomTable();
+    currentMultiplier = getRandomMultiplier();
+  } while (currentTable === lastTable && currentMultiplier === lastMultiplier);
+
+  lastTable = currentTable;
+  lastMultiplier = currentMultiplier;
+}
+
+function getSelectedQuestionTotal() {
+  for (var i = 0; i < questionTotalOptions.length; i++) {
+    if (questionTotalOptions[i].checked) {
+      return Number(questionTotalOptions[i].value);
+    }
+  }
+
+  return 10;
+}
+
 function updateTableRange() {
   var selectedStart = Number(startTableSelect.value);
   var selectedEnd = Number(endTableSelect.value);
 
   if (selectedEnd < selectedStart) {
-    endTableSelect.value = selectedStart;
+    endTableSelect.value = String(selectedStart);
     selectedEnd = selectedStart;
   }
 
