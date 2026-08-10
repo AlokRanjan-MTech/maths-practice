@@ -62,6 +62,55 @@ input {
   font-weight: 700;
 }
 
+.question-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 0 0 18px;
+  padding: 0;
+  border: none;
+}
+
+.question-options legend {
+  width: 100%;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.question-options label {
+  margin: 0;
+}
+
+.question-options input {
+  position: absolute;
+  opacity: 0;
+}
+
+.question-options span {
+  display: block;
+  min-width: 54px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2563eb;
+  background: #ffffff;
+  border: 2px solid #bcccdc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.question-options input:checked + span {
+  color: #ffffff;
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.question-options input:focus + span {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
 button {
   width: 100%;
   padding: 13px 18px;
