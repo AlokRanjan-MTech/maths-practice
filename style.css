@@ -127,6 +127,15 @@ button:hover {
   background: #1d4ed8;
 }
 
+.secondary-button {
+  margin-bottom: 10px;
+  background: #14532d;
+}
+
+.secondary-button:hover {
+  background: #166534;
+}
+
 .question-count,
 .score {
   margin: 0 0 16px;
