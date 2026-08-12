@@ -10,6 +10,7 @@ var lastTable = 0;
 var lastMultiplier = 0;
 var answerSubmitted = false;
 var wrongAnswers = [];
+var practiceQuestions = [];
 
 var setupSection = document.getElementById("setup");
 var practiceSection = document.getElementById("practice");
@@ -32,12 +33,14 @@ var performanceMessage = document.getElementById("performanceMessage");
 var reviewSection = document.getElementById("reviewSection");
 var reviewRows = document.getElementById("reviewRows");
 var noReviewMessage = document.getElementById("noReviewMessage");
+var wrongPracticeButton = document.getElementById("wrongPracticeButton");
 var againButton = document.getElementById("againButton");
 
 startButton.addEventListener("click", startPractice);
 startTableSelect.addEventListener("change", updateTableRange);
 endTableSelect.addEventListener("change", updateTableRange);
 answerForm.addEventListener("submit", submitAnswer);
+wrongPracticeButton.addEventListener("click", startWrongAnswerPractice);
 againButton.addEventListener("click", showSetup);
 
 updateTableRange();
@@ -51,6 +54,7 @@ function startPractice() {
   lastTable = 0;
   lastMultiplier = 0;
   wrongAnswers = [];
+  practiceQuestions = [];
 
   setupSection.classList.add("hidden");
   resultSection.classList.add("hidden");
@@ -61,7 +65,11 @@ function startPractice() {
 
 function showNextQuestion() {
   currentQuestion = currentQuestion + 1;
-  setRandomQuestion();
+  if (practiceQuestions.length > 0) {
+    setPracticeQuestion();
+  } else {
+    setRandomQuestion();
+  }
   answerSubmitted = false;
 
   questionCount.textContent = "Question " + currentQuestion + " of " + totalQuestions;
@@ -120,11 +128,13 @@ function showResult() {
   resultCounts.textContent = score + " Correct \u2022 " + wrongCount + " Wrong";
   performanceMessage.textContent = getPerformanceMessage(accuracy);
   showReview();
+  updateWrongPracticeButton();
 }
 
 function showSetup() {
   resultSection.classList.add("hidden");
   setupSection.classList.remove("hidden");
+  practiceQuestions = [];
 }
 
 function getRandomMultiplier() {
@@ -141,6 +151,15 @@ function setRandomQuestion() {
     currentMultiplier = getRandomMultiplier();
   } while (currentTable === lastTable && currentMultiplier === lastMultiplier);
 
+  lastTable = currentTable;
+  lastMultiplier = currentMultiplier;
+}
+
+function setPracticeQuestion() {
+  var question = practiceQuestions[currentQuestion - 1];
+
+  currentTable = question.table;
+  currentMultiplier = question.multiplier;
   lastTable = currentTable;
   lastMultiplier = currentMultiplier;
 }
@@ -195,6 +214,61 @@ function showReview() {
 
     reviewRows.appendChild(questionCell);
     reviewRows.appendChild(answerCell);
+  }
+}
+
+function updateWrongPracticeButton() {
+  if (wrongAnswers.length === 0) {
+    wrongPracticeButton.classList.add("hidden");
+  } else {
+    wrongPracticeButton.classList.remove("hidden");
+  }
+}
+
+function startWrongAnswerPractice() {
+  practiceQuestions = getUniqueWrongQuestions();
+  shuffleQuestions(practiceQuestions);
+  totalQuestions = practiceQuestions.length;
+  currentQuestion = 0;
+  score = 0;
+  lastTable = 0;
+  lastMultiplier = 0;
+  wrongAnswers = [];
+
+  resultSection.classList.add("hidden");
+  setupSection.classList.add("hidden");
+  practiceSection.classList.remove("hidden");
+
+  showNextQuestion();
+}
+
+function getUniqueWrongQuestions() {
+  var uniqueQuestions = [];
+  var seenQuestions = {};
+
+  for (var i = 0; i < wrongAnswers.length; i++) {
+    var wrongAnswer = wrongAnswers[i];
+    var key = wrongAnswer.table + "x" + wrongAnswer.multiplier;
+
+    if (!seenQuestions[key]) {
+      seenQuestions[key] = true;
+      uniqueQuestions.push({
+        table: wrongAnswer.table,
+        multiplier: wrongAnswer.multiplier
+      });
+    }
+  }
+
+  return uniqueQuestions;
+}
+
+function shuffleQuestions(questions) {
+  for (var i = questions.length - 1; i > 0; i--) {
+    var randomIndex = Math.floor(Math.random() * (i + 1));
+    var currentQuestionItem = questions[i];
+
+    questions[i] = questions[randomIndex];
+    questions[randomIndex] = currentQuestionItem;
   }
 }
 
