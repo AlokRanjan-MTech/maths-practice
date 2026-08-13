@@ -11,6 +11,8 @@ var lastMultiplier = 0;
 var answerSubmitted = false;
 var wrongAnswers = [];
 var practiceQuestions = [];
+var sessionStartTime = 0;
+var totalTimeSeconds = 0;
 
 var setupSection = document.getElementById("setup");
 var practiceSection = document.getElementById("practice");
@@ -29,6 +31,7 @@ var feedback = document.getElementById("feedback");
 var scoreText = document.getElementById("scoreText");
 var finalScore = document.getElementById("finalScore");
 var resultCounts = document.getElementById("resultCounts");
+var timeSummary = document.getElementById("timeSummary");
 var performanceMessage = document.getElementById("performanceMessage");
 var reviewSection = document.getElementById("reviewSection");
 var reviewRows = document.getElementById("reviewRows");
@@ -65,6 +68,11 @@ function startPractice() {
 
 function showNextQuestion() {
   currentQuestion = currentQuestion + 1;
+
+  if (currentQuestion === 1) {
+    startTimer();
+  }
+
   if (practiceQuestions.length > 0) {
     setPracticeQuestion();
   } else {
@@ -112,6 +120,7 @@ function submitAnswer(event) {
   scoreText.textContent = "Score: " + score;
 
   if (currentQuestion === totalQuestions) {
+    stopTimer();
     setTimeout(showResult, 900);
   } else {
     setTimeout(showNextQuestion, 900);
@@ -126,6 +135,7 @@ function showResult() {
   resultSection.classList.remove("hidden");
   finalScore.textContent = score + " / " + totalQuestions + " \u2022 " + accuracy + "%";
   resultCounts.textContent = score + " Correct \u2022 " + wrongCount + " Wrong";
+  timeSummary.textContent = "Time: " + formatTime(totalTimeSeconds) + " \u2022 Avg: " + getAverageTime() + "s/question";
   performanceMessage.textContent = getPerformanceMessage(accuracy);
   showReview();
   updateWrongPracticeButton();
@@ -162,6 +172,30 @@ function setPracticeQuestion() {
   currentMultiplier = question.multiplier;
   lastTable = currentTable;
   lastMultiplier = currentMultiplier;
+}
+
+function startTimer() {
+  sessionStartTime = Date.now();
+  totalTimeSeconds = 0;
+}
+
+function stopTimer() {
+  totalTimeSeconds = Math.round((Date.now() - sessionStartTime) / 1000);
+}
+
+function formatTime(seconds) {
+  var minutes = Math.floor(seconds / 60);
+  var remainingSeconds = seconds % 60;
+
+  if (minutes === 0) {
+    return remainingSeconds + "s";
+  }
+
+  return minutes + "m " + remainingSeconds + "s";
+}
+
+function getAverageTime() {
+  return (totalTimeSeconds / totalQuestions).toFixed(1);
 }
 
 function getSelectedQuestionTotal() {
