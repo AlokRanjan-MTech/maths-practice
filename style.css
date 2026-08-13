@@ -171,6 +171,7 @@ button:hover {
 }
 
 .result-counts,
+.time-summary,
 .performance-message,
 .no-review-message {
   margin: 8px 0;
