@@ -9,6 +9,7 @@ body {
   background: #f3f7fb;
   color: #1f2933;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 20px;
@@ -18,6 +19,25 @@ body {
   width: 100%;
   max-width: 620px;
   text-align: center;
+}
+
+.company-footer {
+  width: 100%;
+  max-width: 620px;
+  margin-top: 24px;
+  color: #64748b;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.company-footer p {
+  margin: 0;
+}
+
+.company-footer .company-name {
+  margin-bottom: 2px;
+  font-weight: 700;
 }
 
 h1 {
@@ -277,6 +297,11 @@ button:hover {
 @media (max-width: 480px) {
   body {
     padding: 12px;
+  }
+
+  .company-footer {
+    margin-top: 18px;
+    font-size: 0.76rem;
   }
 
   h1 {
