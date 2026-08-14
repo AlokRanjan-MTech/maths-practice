@@ -3,14 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maths Table Practice</title>
+  <title>Maths Practice</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app">
-    <h1>Maths Table Practice</h1>
+    <h1>Maths Practice</h1>
 
-    <section id="setup" class="panel">
+    <section id="moduleSelect" class="panel">
+      <h2>Choose Practice</h2>
+      <div class="module-actions">
+        <button id="tableModuleButton" type="button">Table Practice</button>
+        <button id="integerModuleButton" type="button">Integer Practice</button>
+      </div>
+    </section>
+
+    <section id="tableSetup" class="panel hidden">
+      <button class="back-button" data-back-to-modules type="button">Back to Maths Practice</button>
+
+      <h2>Table Practice</h2>
       <div class="range-row">
         <div>
           <label for="startTableSelect">Start Table</label>
@@ -69,31 +80,106 @@
         <legend>Number of Questions</legend>
 
         <label>
-          <input type="radio" name="questionTotal" value="10" checked>
+          <input type="radio" name="tableQuestionTotal" value="10" checked>
           <span>10</span>
         </label>
 
         <label>
-          <input type="radio" name="questionTotal" value="20">
+          <input type="radio" name="tableQuestionTotal" value="20">
           <span>20</span>
         </label>
 
         <label>
-          <input type="radio" name="questionTotal" value="30">
+          <input type="radio" name="tableQuestionTotal" value="30">
           <span>30</span>
         </label>
       </fieldset>
 
-      <button id="startButton" type="button">Start Practice</button>
+      <button id="startTableButton" type="button">Start Practice</button>
+    </section>
+
+    <section id="integerSetup" class="panel hidden">
+      <button class="back-button" data-back-to-modules type="button">Back to Maths Practice</button>
+
+      <h2>Integer Practice</h2>
+
+      <fieldset class="question-options">
+        <legend>Operation</legend>
+
+        <label>
+          <input type="radio" name="integerOperation" value="addition" checked>
+          <span>Addition</span>
+        </label>
+
+        <label>
+          <input type="radio" name="integerOperation" value="subtraction">
+          <span>Subtraction</span>
+        </label>
+
+        <label>
+          <input type="radio" name="integerOperation" value="multiplication">
+          <span>Multiplication</span>
+        </label>
+
+        <label>
+          <input type="radio" name="integerOperation" value="division">
+          <span>Division</span>
+        </label>
+      </fieldset>
+
+      <fieldset class="question-options">
+        <legend>Question Type</legend>
+
+        <label>
+          <input type="radio" name="integerDigitType" value="2" checked>
+          <span>2-Digit</span>
+        </label>
+
+        <label>
+          <input type="radio" name="integerDigitType" value="3">
+          <span>3-Digit</span>
+        </label>
+
+        <label>
+          <input type="radio" name="integerDigitType" value="4">
+          <span>4-Digit</span>
+        </label>
+
+        <label>
+          <input type="radio" name="integerDigitType" value="5">
+          <span>5-Digit</span>
+        </label>
+      </fieldset>
+
+      <fieldset class="question-options">
+        <legend>Number of Questions</legend>
+
+        <label>
+          <input type="radio" name="integerQuestionTotal" value="10" checked>
+          <span>10</span>
+        </label>
+
+        <label>
+          <input type="radio" name="integerQuestionTotal" value="20">
+          <span>20</span>
+        </label>
+
+        <label>
+          <input type="radio" name="integerQuestionTotal" value="30">
+          <span>30</span>
+        </label>
+      </fieldset>
+
+      <button id="startIntegerButton" type="button">Start Practice</button>
     </section>
 
     <section id="practice" class="panel hidden">
       <p id="questionCount" class="question-count">Question 1 of 10</p>
-      <p id="questionText" class="question-text">2 &times; 2 = ?</p>
+      <div id="questionText" class="question-text">2 &times; 2 = ?</div>
 
       <form id="answerForm">
         <label for="answerInput">Your answer</label>
-        <input id="answerInput" type="number" autocomplete="off" required>
+        <input id="answerInput" type="text" inputmode="numeric" pattern="-?[0-9]*" autocomplete="off" required>
         <button type="submit">Submit</button>
       </form>
 
@@ -120,6 +206,7 @@
       <p id="noReviewMessage" class="no-review-message hidden">No questions to review.</p>
       <button id="wrongPracticeButton" class="secondary-button hidden" type="button">Practice Wrong Answers</button>
       <button id="againButton" type="button">Practice Again</button>
+      <button id="resultBackButton" class="outline-button" type="button">Back to Maths Practice</button>
     </section>
   </main>
 
