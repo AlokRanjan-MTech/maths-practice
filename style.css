@@ -36,8 +36,17 @@ body {
 }
 
 .company-footer .company-name {
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   font-weight: 700;
+}
+
+.company-footer .company-powered {
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.company-footer .company-copyright {
+  font-size: 0.74rem;
 }
 
 h1 {
