@@ -166,6 +166,34 @@ button:hover {
   background: #1d4ed8;
 }
 
+.feedback-link {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2563eb;
+  background: #ffffff;
+  border: 2px solid #bcccdc;
+  border-radius: 6px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.feedback-link:hover,
+.feedback-link:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+.home-feedback-link {
+  margin-top: 14px;
+}
+
+.result-feedback-link {
+  margin-top: 10px;
+}
+
 .back-button {
   margin-bottom: 18px;
   color: #1f2933;
