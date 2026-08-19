@@ -448,8 +448,8 @@ function createAdditionQuestion(digitType) {
 
 function createSubtractionQuestion(digitType) {
   var range = getDigitRange(digitType);
-  var left = getRandomNumber(range.min, range.max);
-  var right = getRandomNumber(range.min, range.max);
+  var left = getRandomNumber(range.min + 1, range.max);
+  var right = getRandomNumber(range.min, left - 1);
 
   return buildQuestion(MODULE_INTEGER, left, "-", right, left - right);
 }
