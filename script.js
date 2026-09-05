@@ -56,6 +56,9 @@ var answerForm = document.getElementById("answerForm");
 var answerInput = document.getElementById("answerInput");
 var feedback = document.getElementById("feedback");
 var scoreText = document.getElementById("scoreText");
+var resultHeading = document.getElementById("resultHeading");
+var resultRetryLabel = document.getElementById("resultRetryLabel");
+var resultConfig = document.getElementById("resultConfig");
 var finalScore = document.getElementById("finalScore");
 var resultCounts = document.getElementById("resultCounts");
 var timeSummary = document.getElementById("timeSummary");
@@ -217,6 +220,7 @@ function showResult() {
   var accuracy = Math.round((score / totalQuestions) * 100);
 
   showOnly(resultSection);
+  updateResultSummary();
   finalScore.textContent = score + " / " + totalQuestions + " \u2022 " + accuracy + "%";
   resultCounts.textContent = score + " Correct \u2022 " + wrongCount + " Wrong";
   timeSummary.textContent = "Time: " + formatTime(totalTimeSeconds) + " \u2022 Avg: " + getAverageTime() + "s/question";
@@ -225,6 +229,58 @@ function showResult() {
   updateWrongPracticeButton();
 }
 
+function updateResultSummary() {
+  resultHeading.textContent = getResultHeading();
+  resultConfig.textContent = getResultConfigText();
+
+  if (practiceMode === MODE_WRONG) {
+    resultRetryLabel.textContent = "Wrong Retry";
+    resultRetryLabel.classList.remove("hidden");
+  } else {
+    resultRetryLabel.textContent = "";
+    resultRetryLabel.classList.add("hidden");
+  }
+}
+
+function getResultHeading() {
+  if (activeModule === MODULE_INTEGER) {
+    return getOperationLabel(integerConfig.operation) + " Practice Result";
+  }
+
+  return "Table Practice Result";
+}
+
+function getResultConfigText() {
+  if (activeModule === MODULE_INTEGER) {
+    return getDigitLabel(integerConfig.digitType) + " \u2022 " + totalQuestions + " Questions";
+  }
+
+  if (tableConfig.startTable === tableConfig.endTable) {
+    return "Table " + tableConfig.startTable + " \u2022 " + totalQuestions + " Questions";
+  }
+
+  return "Tables " + tableConfig.startTable + "\u2013" + tableConfig.endTable + " \u2022 " + totalQuestions + " Questions";
+}
+
+function getOperationLabel(operation) {
+  if (operation === "subtraction") {
+    return "Subtraction";
+  }
+
+  if (operation === "multiplication") {
+    return "Multiplication";
+  }
+
+  if (operation === "division") {
+    return "Division";
+  }
+
+  return "Addition";
+}
+
+function getDigitLabel(digitType) {
+  return digitType + "-Digit";
+}
 function practiceAgain() {
   startNormalPractice();
 }

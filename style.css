@@ -268,6 +268,19 @@ button:hover {
   color: #b91c1c;
 }
 
+.result-retry-label {
+  margin: -8px 0 8px;
+  color: #64748b;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.result-config {
+  margin: 0 0 14px;
+  color: #52606d;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
 .final-score {
   margin: 8px 0;
   font-size: 1.8rem;
